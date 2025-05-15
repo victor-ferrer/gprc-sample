@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-sample
+  labels:
+    app: grpc-sample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grpc-sample
+  template:
+    metadata:
+      labels:
+        app: grpc-sample
+    spec:
+      containers:
+      - name: grpc-sample
+        image: localhost:37659/gprc-sample
+        ports:
+        - containerPort: 8080
+        env:
+        - name: POSTGRES_HOST
+          value: "postgres-service"
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_DB
+          value: "ping-db"
+        - name: POSTGRES_USER
+          value: "admin"
+        - name: POSTGRES_PASSWORD
+          value: "password"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
