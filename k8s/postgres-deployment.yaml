@@ -25,7 +25,7 @@ spec:
         - name: POSTGRES_PASSWORD
           value: "password"
         - name: POSTGRES_DB
-          value: "ping-db"
+          value: "ticket-db"
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data

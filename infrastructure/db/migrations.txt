@@ -1,3 +1,0 @@
-// TODO move to a migrations tool
-
-create table ping ( id serial primary key, create_at TIMESTAMP not null default CURRENT_TIMESTAMP);
