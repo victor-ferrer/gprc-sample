@@ -11,7 +11,7 @@ import (
 
 func RunDatabaseMigrations(db *sql.DB) error {
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
-	m, err := migrate.NewWithDatabaseInstance("file://migrations", "postgres", driver)
+	m, err := migrate.NewWithDatabaseInstance("file:///app/migrations", "postgres", driver)
 
 	if err != nil {
 		return err

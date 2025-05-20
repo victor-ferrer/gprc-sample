@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/victor-ferrer/gprc-sample/internal/models"
 )
 
@@ -69,6 +70,7 @@ func (t *TicketHandler) UploadTicket(c *fiber.Ctx) error {
 
 	err = t.tr.CreateTicket(ticket)
 	if err != nil {
+		log.Errorf("Failed to create ticket: %v", err)
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Failed to save ticket to DB",
 		})
@@ -78,4 +80,22 @@ func (t *TicketHandler) UploadTicket(c *fiber.Ctx) error {
 		"message": "File uploaded successfully",
 	})
 
+}
+
+func (t *TicketHandler) GetTicket(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid ticket ID",
+		})
+	}
+	ticket, err := t.tr.GetTicket(id)
+	if err != nil {
+		log.Errorf("Failed to get ticket: %v", err)
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Failed to get ticket from DB",
+		})
+	}
+
+	return c.JSON(ticket)
 }

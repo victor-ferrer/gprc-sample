@@ -44,8 +44,7 @@ func main() {
 	tr := repository.NewTicketRepository(db)
 	th := handlers.NewTicketHandler(tr)
 	app.Post("/ticket", th.UploadTicket)
-	//app.Get("/ticket", th.GetTicket)
-
+	app.Get("/ticket/:id", th.GetTicket)
 	app.Listen(":8080")
 
 }
