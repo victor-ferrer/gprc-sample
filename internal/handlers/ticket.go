@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -17,6 +18,10 @@ type TicketHandler struct {
 type TicketRepository interface {
 	CreateTicket(ticket *models.Ticket) error
 	GetTicket(id int) (*models.Ticket, error)
+}
+
+type FileStorage interface {
+	SaveFile(destination string) error
 }
 
 func NewTicketHandler(tr TicketRepository) *TicketHandler {
@@ -51,12 +56,12 @@ func (t *TicketHandler) UploadTicket(c *fiber.Ctx) error {
 	purchaseDate, _ := time.Parse(time.RFC3339, purchaseDateStr)
 
 	// Save the file to the server
-	//err = c.SaveFile(file, fmt.Sprintf("./uploads/%s", file.Filename))
-	//if err != nil {
-	//	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-	//		"error": "Failed to save file",
-	//	})
-	//}
+	err = c.SaveFile(file, fmt.Sprintf("./uploads/%s", file.Filename))
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Failed to save file",
+		})
+	}
 
 	ticket := &models.Ticket{
 		CreatedAt:    time.Now(),
