@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/victor-ferrer/gprc-sample/internal/handlers"
-	"github.com/victor-ferrer/gprc-sample/internal/repository"
+	infrastructure "github.com/victor-ferrer/gprc-sample/infrastructure/db"
 
 	"database/sql"
 	"log"
@@ -33,13 +31,12 @@ func main() {
 
 	log.Println("Successfully connected to the database")
 
-	app := fiber.New()
+	err = infrastructure.RunDatabaseMigrations(db)
+	if err != nil {
+		log.Fatalf("Failed to run database migrations: %v", err)
+	}
 
-	tr := repository.NewTicketRepository(db)
-	th := handlers.NewTicketHandler(tr)
-	app.Post("/ticket", th.UploadTicket)
-	app.Get("/ticket/:id", th.GetTicket)
-	app.Listen(":8080")
+	log.Println("Database migrations completed successfully")
 
 }
 

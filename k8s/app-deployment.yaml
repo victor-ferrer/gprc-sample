@@ -14,6 +14,20 @@ spec:
       labels:
         app: grpc-sample
     spec:
+      initContainers:
+        - name: db-migrations
+          image: localhost:37659/migration
+          env:
+          - name: POSTGRES_HOST
+            value: "postgres-service"
+          - name: POSTGRES_PORT
+            value: "5432"
+          - name: POSTGRES_DB
+            value: "ticket-db"
+          - name: POSTGRES_USER
+            value: "admin"
+          - name: POSTGRES_PASSWORD
+            value: "password"
       containers:
       - name: grpc-sample
         image: localhost:37659/gprc-sample
