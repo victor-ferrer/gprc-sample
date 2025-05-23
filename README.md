@@ -1,4 +1,4 @@
-Sample microservice built in Go
+Sample microservice built in Go 
 
 ## Running a local K8s cluster
 
