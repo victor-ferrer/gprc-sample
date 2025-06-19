@@ -1,4 +1,5 @@
-docker_build('localhost:37659/gprc-sample','.',dockerfile='Dockerfile')
+docker_build('localhost:37659/migration','.',dockerfile='build/Dockerfile-migration')
+docker_build('localhost:37659/gprc-sample','.',dockerfile='build/Dockerfile')
 
 k8s_yaml([
     'k8s/postgres-deployment.yaml',
