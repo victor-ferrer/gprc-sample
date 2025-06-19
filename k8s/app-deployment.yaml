@@ -33,6 +33,23 @@ spec:
         image: localhost:37659/gprc-sample
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /up
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 3   
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 3   
+
         env:
         - name: POSTGRES_HOST
           value: "postgres-service"

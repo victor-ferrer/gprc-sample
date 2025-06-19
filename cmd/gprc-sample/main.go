@@ -37,6 +37,11 @@ func main() {
 
 	tr := repository.NewTicketRepository(db)
 	th := handlers.NewTicketHandler(tr)
+	hh := handlers.NewHealthHandler(db)
+
+	app.Get("/up", hh.UpCheck)
+	app.Get("/ready", hh.HealthCheck)
+
 	app.Post("/ticket", th.UploadTicket)
 	app.Get("/ticket/:id", th.GetTicket)
 	app.Listen(":8080")
