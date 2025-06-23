@@ -36,8 +36,9 @@ func main() {
 	app := fiber.New()
 
 	tr := repository.NewTicketRepository(db)
+
 	th := handlers.NewTicketHandler(tr)
-	hh := handlers.NewHealthHandler(db)
+	hh := handlers.NewHealthHandler()
 
 	app.Get("/up", hh.UpCheck)
 	app.Get("/ready", hh.HealthCheck)
