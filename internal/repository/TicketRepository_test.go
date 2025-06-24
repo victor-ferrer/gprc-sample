@@ -79,8 +79,14 @@ func TestCreateTicket(t *testing.T) {
 }
 
 func TestGetTicket(t *testing.T) {
+
+	_, err := testDB.Exec(`DELETE FROM Ticket`)
+	if err != nil {
+		t.Fatalf("failed to clear Ticket table: %v", err)
+	}
+
 	// Insert a ticket directly into the database
-	_, err := testDB.Exec(`
+	_, err = testDB.Exec(`
 		INSERT INTO Ticket (CreatedAt, UpdatedAt, PurchaseDate, Amount, Currency, Labels, File)
 		VALUES (?, ?, ?, ?, ?, ?, ?)`,
 		time.Now(), time.Now(), time.Now(), 50.00, "EUR", "event,standard", "event.pdf",
