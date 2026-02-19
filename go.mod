@@ -3,7 +3,7 @@ module github.com/victor-ferrer/gprc-sample
 go 1.24.3
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.9
+	github.com/gofiber/fiber/v2 v2.52.11
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/lib/pq v1.10.9
 )
